@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: drive-doctor-cloud-api
+    runtime: python
+    plan: starter
+    rootDir: cloud_api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DD_API_KEY
+        generateValue: true
+      - key: DD_DB_PATH
+        value: /var/data/drive_doctor.db
+    disk:
+      name: drive-doctor-data
+      mountPath: /var/data
+      sizeGB: 1
